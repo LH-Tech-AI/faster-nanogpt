@@ -25,7 +25,7 @@ In our benchmarks (**7.23M parameter model** on TinyStories), the optimized vers
 | **Convergence (Loss < 2.0)** | 3,140 Iters | 2,090 Iters | ~33% fewer steps |
 | **Efficiency** | 1.0x | ~1.6x | More knowledge per token |
 
-![Graph that shows the training of the above model with orginal nanoGPT and faster-nanogpt](/assets/images/graph-loss.png)
+![Graph that shows the training of the above model with orginal nanoGPT and faster-nanogpt](https://raw.githubusercontent.com/LH-Tech-AI/faster-nanogpt/refs/heads/main/images/graph-loss.png)
 
 ---
 
