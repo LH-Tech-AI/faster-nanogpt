@@ -1,4 +1,4 @@
-# 🚀 Optimized nanoGPT (Muon Edition)
+# 🚀 Faster nanoGPT
 
 This repository is a modern, high-performance evolution of Karpathy's original **nanoGPT**. It integrates state-of-the-art architecture improvements and the revolutionary **Muon optimizer** to achieve faster convergence and better loss plateaus.
 
