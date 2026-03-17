@@ -118,6 +118,18 @@ print(f"tokens per iteration will be: {tokens_per_iter:,}")
 
 if master_process:
     os.makedirs(out_dir, exist_ok=True)
+    # Check if directory exists and is writable
+    if not os.path.isdir(out_dir):
+        raise RuntimeError(f"ERROR: out_dir {out_dir} could not be created!")
+    
+    test_file = os.path.join(out_dir, '.write_test')
+    try:
+        with open(test_file, 'w') as f:
+            f.write('test')
+        os.remove(test_file)
+        print(f"out_dir {out_dir} is ready and writable.")
+    except (IOError, OSError) as e:
+        raise RuntimeError(f"ERROR: out_dir {out_dir} not writable! Details: {e}")
 torch.manual_seed(1337 + seed_offset)
 torch.backends.cuda.matmul.allow_tf32 = True # allow tf32 on matmul
 torch.backends.cudnn.allow_tf32 = True # allow tf32 on cudnn
