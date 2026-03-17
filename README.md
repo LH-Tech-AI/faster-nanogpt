@@ -98,4 +98,14 @@ To see the difference in "intelligence", we prompted both versions with:
 
 ---
 
+### **🧠 Why is it better?**
+
+The significant jump in quality and convergence speed is driven by three core upgrades:
+
+1. **Muon Optimizer:** Unlike AdamW, which updates weights element-wise, Muon maintains **orthogonality** in the 2D weight matrices. This ensures that the model learns diverse features without redundant or "collapsed" gradients, leading to much higher intellectual density per parameter.  
+2. **RoPE (Rotary Positional Embeddings):** Traditional GPT-2 use absolute position embeddings which struggle with long-range logic. RoPE allows the model to understand the **relative distance** between words much better, which is crucial for maintaining story consistency and grammar.  
+3. **RMSNorm & QK-Norm:** These stabilization layers prevent the internal activations from "exploding." This allows us to use a higher learning rate and ensures that every training step contributes meaningfully to the model's understanding of language.
+
+---
+
 *Thanks to Andrej Karpathy for his original implementation of nanoGPT and to Keller Jordan for the Muon optimizer*
