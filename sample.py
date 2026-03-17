@@ -1,7 +1,3 @@
-### IMPORTANT: UPLOAD TO GITHUB!!! ###
-
-
-
 """
 Sample from a trained model with modern architecture support (RoPE, RMSNorm, etc.)
 """
