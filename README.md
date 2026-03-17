@@ -37,6 +37,8 @@ First, you'll have to **install these dependencies** for Python (if you haven't 
 python -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
 python -m pip install tiktoken tqdm datasets numpy pillow
 ```
+or simply use `pip install -r requirements.txt`
+
 If you are on **Linux**, I recommend using a **Python venv**:
 ```bash
 python -m venv venv
