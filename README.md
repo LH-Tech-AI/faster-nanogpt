@@ -18,7 +18,7 @@ This repository is a modern, high-performance evolution of Karpathy's original *
 
 ## 📊 Training Performance (nanoGPT vs. faster-nanogpt)
 
-In our benchmark (**7.23M parameter model** on TinyStories), the optimized version achieved the same validation loss as the original in nearly half the time.
+In our benchmark (**7.23M parameter model** on TinyStories trained on **T4** GPU), the optimized version achieved the same validation loss as the original in nearly half the time.
 
 | Metric | Original nanoGPT (AdamW) | faster-nanogpt (Muon) | Improvement |
 | :--- | :--- | :--- | :--- |
@@ -97,6 +97,9 @@ To see the difference in "intelligence", we prompted both versions with:
 | :--- | :--- |
 | *Once upon a time, there was a dog named Max. Max loved to play outside in the sky. Every day, he would go to the park with his friends. They would play pretend he was a ball, a ball, and a ball.<br><br>One day, Max decided to visit the park with his friends. He looked at the park and saw a big tree with many colors. The tree felt a little scared, but the branches could not reach them.<br><br>Max felt sad. He shouted with his friends. "I want to play with the ball!"<br><br>But Max didn't like the ball anymore. He was scared. He ran to his friends and played with the ball.<br><br>But then, a big dog came to the dog. Max was scared. He wanted to play with the ball. The dog said, "Don't hurt you, Max. It was not nice. The dog is mean to break your ball. It is mean. You need to fix it."<br><br>Max looked at the ball and said* | *Once upon a time, there was a dog named Max. Max was very sad because he lived in a big field with his friends. One day, Max saw a big, tall tree in the tree. He got scared and wanted to go away and get out of the tree.<br><br>Max asked his mom, "What is wrong, so it's too shiny for me?" His mom smiled and said, "I don't want to get hurt. You just need to be quiet."<br><br>Max was very sad and he wanted to escape. He watched the other children in the yard and the big tree. He saw the tree and thought it was very pretty. He asked his mom, "Can we help me find the way you will be back here?"<br><br>His mom smiled and said, "Yes, let's go."<br><br>Max was happy to see the big tree and he knew he could help him find the owner. He was glad he was safe and happy. From then on, Max always remembered to be kind and quiet.* |
 | **Observation:** Struggles significantly with coherence and logic. It falls into repetitive loops ("a ball, a ball, and a ball") and loses track of the story's subject. Semantic confusion is high (e.g., "dog came to the dog"). | **Observation:** Shows much higher intellectual density. It maintains a consistent narrative thread, uses proper dialogue structures, and demonstrates causal reasoning ("Max was sad because..."). The grammar is significantly more stable. |
+
+Keep in mind, that this model was trained on a **T4** GPU - **not a modern GPU** that supports native **bfloat16** - I'll try that and update this README here to keep you up to date.
+**Spoiler:** The overhead of ~90ms per iteration will be almost deleted.
 
 ---
 
