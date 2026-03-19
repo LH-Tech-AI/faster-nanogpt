@@ -133,8 +133,6 @@ if master_process:
     except (IOError, OSError) as e:
         raise RuntimeError(f"ERROR: out_dir {out_dir} not writable! Details: {e}")
 torch.manual_seed(1337 + seed_offset)
-torch.backends.cuda.matmul.allow_tf32 = True # allow tf32 on matmul
-torch.backends.cudnn.allow_tf32 = True # allow tf32 on cudnn
 device_type = 'cuda' if 'cuda' in device else 'cpu'
 ptdtype = {'float32': torch.float32, 'bfloat16': torch.bfloat16, 'float16': torch.float16}[dtype]
 ctx = nullcontext() if device_type == 'cpu' else torch.amp.autocast(device_type=device_type, dtype=ptdtype)
@@ -146,13 +144,22 @@ def get_batch(split):
         data = np.memmap(os.path.join(data_dir, 'train.bin'), dtype=np.uint16, mode='r')
     else:
         data = np.memmap(os.path.join(data_dir, 'val.bin'), dtype=np.uint16, mode='r')
+    
     ix = torch.randint(len(data) - block_size, (batch_size,))
-    x = torch.stack([torch.from_numpy((data[i:i+block_size]).astype(np.int64)) for i in ix])
-    y = torch.stack([torch.from_numpy((data[i+1:i+1+block_size]).astype(np.int64)) for i in ix])
+    
+    # 1. Wir stacken erst die nativen uint16 (weniger CPU Last)
+    x_raw = torch.stack([torch.from_numpy(data[i:i+block_size]) for i in ix])
+    y_raw = torch.stack([torch.from_numpy(data[i+1:i+1+block_size]) for i in ix])
+    
     if device_type == 'cuda':
-        x, y = x.pin_memory().to(device, non_blocking=True), y.pin_memory().to(device, non_blocking=True)
+        # 2. Wir schicken uint16 zur GPU (spart Bandbreite) 
+        # und konvertieren ERST DORT zu long (int64)
+        x = x_raw.to(device, dtype=torch.long, non_blocking=True)
+        y = y_raw.to(device, dtype=torch.long, non_blocking=True)
     else:
-        x, y = x.to(device), y.to(device)
+        x = x_raw.to(device, dtype=torch.long)
+        y = y_raw.to(device, dtype=torch.long)
+        
     return x, y
 
 # init these up here, can override if init_from='resume' (i.e. from a checkpoint)
