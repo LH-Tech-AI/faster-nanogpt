@@ -359,19 +359,31 @@ while True:
                 muon_lr_current = optimizer.param_groups[0]['lr']
                 log_dict["muon_lr"] = muon_lr_current
             wandb.log(log_dict)
+
         if losses['val'] < best_val_loss or always_save_checkpoint:
-            best_val_loss = losses['val']
+            # WICHTIG: Wir aktualisieren best_val_loss noch NICHT hier oben, 
+            # damit die if-Abfrage unten den Vergleich noch machen kann.
+            
             if iter_num > 0:
                 checkpoint = {
                     'model': raw_model.state_dict(),
                     'optimizer': optimizer.state_dict(),
                     'model_args': model_args,
                     'iter_num': iter_num,
-                    'best_val_loss': best_val_loss,
+                    'best_val_loss': best_val_loss, # der bisherige Bestwert
                     'config': config,
                 }
-                print(f"saving checkpoint to {out_dir}")
+    
+                # 1. Speichere IMMER den aktuellsten Stand
+                print(f"saving latest checkpoint to {os.path.join(out_dir, 'ckpt.pt')}")
                 torch.save(checkpoint, os.path.join(out_dir, 'ckpt.pt'))
+    
+                # 2. Speichere den BESTEN Stand nur, wenn er wirklich besser ist
+                if losses['val'] < best_val_loss:
+                    best_val_loss = losses['val'] # Jetzt erst aktualisieren
+                    print(f"new best val loss: {best_val_loss:.4f}! saving best_ckpt.pt")
+                    torch.save(checkpoint, os.path.join(out_dir, 'best_ckpt.pt'))
+
     if iter_num == 0 and eval_only:
         break
 
