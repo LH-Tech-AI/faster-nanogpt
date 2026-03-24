@@ -62,7 +62,7 @@ python3 data/fineweb_edu/prepare.py
 **2. Start the training**:
 
 ```bash
-python3 train.py     --dataset=fineweb_edu     --n_layer=12     --n_head=12     --n_embd=768     --block_size=1024     --batch_size=16     --gradient_accumulation_steps=32     --learning_rate=6e-4     --max_iters=10000     --eval_interval=250     --eval_iters=50     --log_interval=10     --weight_decay=0.1     --warmup_iters=200     --lr_decay_iters=10000     --min_lr=1e-4     --dtype=bfloat16     --compile=True     --always_save_checkpoint=True     --init_from=scratch     --out_dir=out/fineweb_124m     --use_muon=True     --muon_lr=0.02     --muon_momentum=0.95     --schedule=trapezoidal     --cooldown_iters=1000     --use_rope=True     --activation=relu2     --norm_type=rmsnorm     --qk_norm=True     --logit_soft_cap=30.0     --dropout=0.0     --bias=False     --grad_clip=1.0
+python3 train.py     --dataset=fineweb_edu     --n_layer=12     --n_head=12     --n_embd=768     --block_size=1024     --batch_size=16     --gradient_accumulation_steps=32     --learning_rate=6e-4     --max_iters=10000     --eval_interval=250     --eval_iters=50     --log_interval=10     --weight_decay=0.1     --warmup_iters=200     --lr_decay_iters=10000     --min_lr=1e-4     --dtype=bfloat16     --compile=True     --always_save_checkpoint=True     --init_from=scratch     --out_dir=out/fineweb_124m     --use_muon=True     --muon_lr=0.02     --muon_momentum=0.95     --schedule=cosine     --cooldown_iters=1000     --use_rope=True     --activation=relu2     --norm_type=rmsnorm     --qk_norm=True     --logit_soft_cap=30.0     --dropout=0.0     --bias=False     --grad_clip=1.0
 ```
 **3. Watch the training:**
 
